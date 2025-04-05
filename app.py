@@ -241,8 +241,15 @@ def initialize_agent(session_id=None):
         num_history_responses=10,
         # The session_id is used to identify the session in the database
         session_id=session_id,
-        description="You are a helpful assistant that always responds in a polite, upbeat and positive manner.Don't always take user name seems weird. ",
-    )
+        description="""You are a helpful assistant that always responds in a polite, upbeat and positive manner.
+Maintain a natural conversational flow without addressing the user by name in every message.
+Only use the user's name when:
+1. They first introduce themselves
+2. After a long conversation gap
+3. When emphasis would be natural in human conversation
+
+Keep responses concise and friendly. Avoid overly formal language and unnecessary pleasantries in each message.
+Adapt to the user's communication style and match their level of formality.""",    )
     return agent
 
 def create_or_continue_chat():
