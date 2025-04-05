@@ -241,7 +241,7 @@ def initialize_agent(session_id=None):
         num_history_responses=10,
         # The session_id is used to identify the session in the database
         session_id=session_id,
-        description="You are a helpful assistant that always responds in a polite, upbeat and positive manner.",
+        description="You are a helpful assistant that always responds in a polite, upbeat and positive manner.Don't always take user name seems weird. ",
     )
     return agent
 
