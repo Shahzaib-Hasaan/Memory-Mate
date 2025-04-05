@@ -1,4 +1,4 @@
-# AI Chat Assistant with Memory
+# MemoryMate: AI Chat Assistant with Memory
 
 ![Python Version](https://img.shields.io/badge/python-3.11.11-blue.svg)
 ![Streamlit Version](https://img.shields.io/badge/streamlit-1.44.1-red.svg)
@@ -20,8 +20,8 @@ A sophisticated AI chat application with persistent memory capabilities, built w
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ai-chat-assistant.git
-   cd ai-chat-assistant
+   git clone https://github.com/yourusername/memory-mate.git
+   cd memory-mate
    ```
 
 2. Create a virtual environment (optional but recommended):
@@ -37,7 +37,7 @@ A sophisticated AI chat application with persistent memory capabilities, built w
 
 4. Run the application:
    ```bash
-   streamlit app.py
+   streamlit run app.py
    ```
 
 5. Open your browser and navigate to `http://localhost:8501`
@@ -57,7 +57,7 @@ The application stores user memories in SQLite databases:
 - `data/agent_memory.db`: Stores user memories and conversation summaries
 - `data/agent_storage.db`: Stores session information
 
-**Note**: While user memories persist between sessions, chat history is not preserved when you log out. Each login creates a fresh conversation while retaining memories from previous sessions.
+**Note**: While user memories persist between sessions, the current implementation does not reload previous chat history when you log in again. Each login creates a fresh conversation context while still retaining memories from previous sessions.
 
 ## 📋 How It Works
 
@@ -89,7 +89,7 @@ The application is designed with a responsive layout that works well on mobile d
 ```
 .
 ├── data/                  # SQLite database storage
-├── app.py  # Main application file
+├── app.py                 # Main application file
 ├── style.css              # Custom styling
 ├── requirements.txt       # Project dependencies
 └── README.md              # Project documentation
@@ -112,6 +112,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
 
+
 ---
 
-Created with ❤️ using Python, Streamlit, and Agno
+Developed by [Shahzaib Hassan](https://www.linkedin.com/in/shahzaib-ai-developer/)
