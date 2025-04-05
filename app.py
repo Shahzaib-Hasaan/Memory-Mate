@@ -15,7 +15,9 @@ from agno.memory.summarizer import MemorySummarizer
 from agno.memory.manager import MemoryManager
 from dotenv import load_dotenv
 
+# Load environment variables from .env file for local development
 load_dotenv()
+
 # Create data directory if it doesn't exist
 Path("data").mkdir(exist_ok=True)
 
@@ -25,16 +27,122 @@ AGENT_STORAGE_FILE = "data/agent_storage.db"
 
 # Set page configuration
 st.set_page_config(
-    page_title="AI Chat Assistant",
-    page_icon="🤖",
+    page_title="MemoryMate",
+    page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Load custom CSS
+# Load custom CSS with error handling
 def load_css():
-    with open("style.css", "r") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    try:
+        with open("style.css", "r", encoding="utf-8", errors="ignore") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    except Exception as e:
+        st.warning(f"Could not load custom CSS: {str(e)}")
+        # Add minimal required styling inline
+        st.markdown("""
+        <style>
+        /* Essential styling */
+        .chat-app-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 80px;
+            overflow-y: auto;
+            padding: 20px;
+            z-index: 1;
+        }
+        .chat-input-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 350px;
+            right: 0;
+            background: #f9fafb;
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 15px 30px;
+            z-index: 100;
+        }
+        .memory-item {
+            background: rgba(108, 99, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .memory-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .user-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .sidebar-header {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+        }
+        .memory-header, .summary-header {
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .summary-content {
+            background: rgba(98, 189, 120, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .no-memories, .no-summary {
+            color: #888;
+            font-style: italic;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+        .loading-indicator {
+            display: inline-block;
+            animation: blink 1s steps(1) infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .login-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .attribution {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .attribution a {
+            color: #6c63ff;
+            text-decoration: none;
+        }
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 # Initialize session state
 if "messages" not in st.session_state:
@@ -53,11 +161,15 @@ if "loading" not in st.session_state:
     st.session_state.loading = False
 
 # Create model for all memory components
-deepseek_model = OpenAILike(
-    id=st.secrets["DEEPSEEK_MODEL_ID"],
-    base_url=st.secrets["DEEPSEEK_API_ENDPOINT"],
-    api_key=st.secrets["DEEPSEEK_API_KEY"]
-)
+try:
+    deepseek_model = OpenAILike(
+        id=st.secrets["DEEPSEEK_MODEL_ID"],
+        base_url=st.secrets["DEEPSEEK_API_ENDPOINT"],
+        api_key=st.secrets["DEEPSEEK_API_KEY"]
+    )
+except Exception as e:
+    st.error(f"Error initializing model: {str(e)}")
+    st.stop()
 
 # Create custom memory components with our model
 memory_classifier = MemoryClassifier(model=deepseek_model)
@@ -201,7 +313,7 @@ def handle_user_login():
     if st.session_state.user_id is None:
         with st.container():
             st.markdown("<div class='login-container'>", unsafe_allow_html=True)
-            st.markdown("<h3>👋 Welcome to AI Chat Assistant</h3>", unsafe_allow_html=True)
+            st.markdown("<h3>👋 Welcome to MemoryMate</h3>", unsafe_allow_html=True)
             st.markdown("<p>Enter your username to continue or create a new account.</p>", unsafe_allow_html=True)
             
             # Get or create user profile
@@ -290,6 +402,14 @@ if user_logged_in:
                 st.markdown("<div class='no-summary'>No summary available yet</div>", unsafe_allow_html=True)
         else:
             st.markdown("<div class='no-summary'>No summary available yet</div>", unsafe_allow_html=True)
+            
+        # Add attribution at the bottom of the sidebar
+        st.divider()
+        st.markdown(
+            "<div class='attribution'>Developed by "
+            "<a href='https://www.linkedin.com/in/shahzaib-ai-developer/' target='_blank'>Shahzaib Hassan</a></div>", 
+            unsafe_allow_html=True
+        )
 
     # Main chat interface - full width 
     # Chat container with fixed height and input at bottom
