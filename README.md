@@ -37,7 +37,7 @@ A sophisticated AI chat application with persistent memory capabilities, built w
 
 4. Run the application:
    ```bash
-   streamlit run streamlit_chat_app.py
+   streamlit app.py
    ```
 
 5. Open your browser and navigate to `http://localhost:8501`
@@ -89,7 +89,7 @@ The application is designed with a responsive layout that works well on mobile d
 ```
 .
 ├── data/                  # SQLite database storage
-├── streamlit_chat_app.py  # Main application file
+├── app.py  # Main application file
 ├── style.css              # Custom styling
 ├── requirements.txt       # Project dependencies
 └── README.md              # Project documentation
