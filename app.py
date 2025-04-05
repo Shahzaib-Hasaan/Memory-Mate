@@ -54,9 +54,9 @@ if "loading" not in st.session_state:
 
 # Create model for all memory components
 deepseek_model = OpenAILike(
-    id=os.getenv("DEEPSEEK_MODEL_ID"),
-    base_url=os.getenv("DEEPSEEK_API_ENDPOINT"), 
-    api_key=os.getenv("DEEPSEEK_API_KEY")
+    id=st.secrets["DEEPSEEK_MODEL_ID"],
+    base_url=st.secrets["DEEPSEEK_API_ENDPOINT"],
+    api_key=st.secrets["DEEPSEEK_API_KEY"]
 )
 
 # Create custom memory components with our model
