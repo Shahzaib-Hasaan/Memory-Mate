@@ -20,8 +20,8 @@ A sophisticated AI chat application with persistent memory capabilities, built w
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/memory-mate.git
-   cd memory-mate
+   git clone https://github.com/Shahzaib-Hasaan/Memory-Mate.git
+   cd Memory-Mate
    ```
 
 2. Create a virtual environment (optional but recommended):
@@ -115,4 +115,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ---
 
-Developed by [Shahzaib Hassan](https://www.linkedin.com/in/shahzaib-ai-developer/)
+Developed by [Shahzaib Hassan](https://www.linkedin.com/in/shahzaib-hassan-ai/)
