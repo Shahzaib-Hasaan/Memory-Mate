@@ -115,4 +115,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ---
 
-Developed by [Shahzaib Hassan](https://www.linkedin.com/in/shahzaib-hassan-ai/)
+Developed by [Shahzaib Hassan](https://www.linkedin.com/in/shahzaib-hassan-ai-developer/)
